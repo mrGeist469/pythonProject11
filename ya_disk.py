@@ -17,8 +17,8 @@ class YaUploader:
         params = {"path": disk_file_path, "overwrite": "true"}
         response = requests.get(upload_url, headers=headers, params=params)
         file_json = response.json()
-        print(file_json)
-
-        # response.raise_for_status()
-        # if response.status_code == 201:
-        #     print("Success")
+        href = file_json.get("href", "")
+        response_load = requests.put(href, data=open(self.file_path, 'rb'))
+        response_load.raise_for_status()
+        if response.status_code == 201:
+            print("Success")
